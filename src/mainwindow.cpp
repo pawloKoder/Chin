@@ -20,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->view->setScene(scene);
 
 	CharacterSet set = CharacterSet::chineseSmall();
-	matcher.reset(new CharacterMatcher(set, 1, 1));
+	matcher.reset(new CharacterMatcher(set, 2, 2));
 }
 
 
@@ -79,7 +79,7 @@ void MainWindow::saveImage()
 
 void MainWindow::match(QImage img) {
 	//TODO Remove magic numbers
-	qreal size = 28;
+	qreal size = 26;
 	qreal window_size = 14;
 
 	scene->clear();

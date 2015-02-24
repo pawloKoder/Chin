@@ -38,9 +38,6 @@ CharacterMatcher::CharacterMatcher(CharacterSet c, int N, int M):
 	yblocks(M),
 	characters(c)
 {
-	min_value = 255;
-	max_value = 0;
-
 	computeBlockValues();
 }
 
@@ -62,6 +59,12 @@ static QList<qreal> computeBlockValuesImpl(QImage image, int N ,int M)
 }
 
 
+static qreal scale(qreal v, qreal min1, qreal max1, qreal min2, qreal max2) {
+	qreal base = (v - min1)/(max1-min1);
+	return min2 + base * (max2 - min2);
+}
+
+
 void CharacterMatcher::computeBlockValues()
 {
 	images_of_characters.clear();
@@ -71,6 +74,18 @@ void CharacterMatcher::computeBlockValues()
 	block_values.resize(characters.count());
 	for (int i = 0; i < characters.count(); ++i)
 		block_values[i] = computeBlockValuesImpl(images_of_characters[i], xblocks, yblocks);
+
+	qreal min = 255;
+	qreal max = 0;
+	for (auto block: block_values)
+		for (auto value: block) {
+			min = qMin(min, value);
+			max = qMax(max, value);
+		}
+
+	for(auto & block: block_values)
+		for(auto & value: block)
+			value = scale(value, min, max, 0, 255);
 }
 
 

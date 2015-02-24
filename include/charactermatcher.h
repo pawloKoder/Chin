@@ -33,8 +33,6 @@ public:
 private:
 	int xblocks;
 	int yblocks;
-	qreal min_value;
-	qreal max_value;
 	CharacterSet characters;
 
 	QMap<int, QImage> images_of_characters;
