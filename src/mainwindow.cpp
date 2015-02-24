@@ -7,20 +7,22 @@
 #include <QSettings>
 #include "characterset.h"
 #include "charactermatcher.h"
+#include "matchercreationdialog.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
 	ui(new Ui::MainWindow)
 {
+	initSettings();
+
 	ui->setupUi(this);
 	createConnections();
 
 	scene = new QGraphicsScene();
 	ui->view->setScene(scene);
 
-	CharacterSet set = CharacterSet::chineseSmall();
-	matcher.reset(new CharacterMatcher(set, 2, 2));
+	createMatcher();
 }
 
 
@@ -35,6 +37,7 @@ void MainWindow::createConnections()
 	connect(ui->actionAbout_Qt, &QAction::triggered, [=](){QMessageBox::aboutQt(this);});
 	connect(ui->action_Open_Image, &QAction::triggered, this, &MainWindow::loadImage);
 	connect(ui->action_Save_Image, &QAction::triggered, this, &MainWindow::saveImage);
+	connect(ui->actionCharacter_set, &QAction::triggered, this, &MainWindow::matcherSettings);
 }
 
 
@@ -77,10 +80,11 @@ void MainWindow::saveImage()
 }
 
 
-void MainWindow::match(QImage img) {
-	//TODO Remove magic numbers
-	qreal size = 26;
-	qreal window_size = 14;
+void MainWindow::match(QImage img)
+{
+	QSettings settings;
+	qreal size = settings.value("charSize").toDouble();
+	qreal window_size = settings.value("windowSize").toDouble();
 
 	scene->clear();
 	int W = img.width() / window_size;
@@ -93,4 +97,46 @@ void MainWindow::match(QImage img) {
 			matcher->appendCharacter(scene, matcher->bestFit(subimage), QPointF(i * size, j * size));
 		}
 	}
+}
+
+
+void MainWindow::initSettings(bool force)
+{
+	QSettings settings;
+
+	auto setDefault = [&](const QString & key, const QVariant & value) {
+		if (!settings.contains(key) || force)
+			settings.setValue(key, value);
+	};
+
+	setDefault("charSize", 26);
+	setDefault("windowSize", 14);
+	setDefault("xblocks", 2);
+	setDefault("yblocks", 2);
+	settings.sync();
+}
+
+
+void MainWindow::createMatcher()
+{
+	QSettings settings;
+	auto setType = settings.value("characterSet");
+	CharacterSet set = CharacterSet::create(setType.value<CharacterSets>());
+	matcher.reset(new CharacterMatcher(set, settings.value("xblocks").toInt(), settings.value("yblocks").toInt()));
+}
+
+
+void MainWindow::matcherSettings()
+{
+
+	MatcherCreationDialog dialog;
+	if (dialog.exec()) {
+		QSettings settings;
+		settings.setValue("xblocks", dialog.xblocks());
+		settings.setValue("yblocks", dialog.yblocks());
+		settings.setValue("windowSize", dialog.windowSize());
+		settings.setValue("characterSet",  qVariantFromValue(dialog.set()));
+		settings.sync();
+	}
+	createMatcher();
 }

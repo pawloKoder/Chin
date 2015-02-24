@@ -7,6 +7,8 @@
 #include <qmath.h>
 #include "imageutils.h"
 
+#include <QDebug>
+
 
 static QImage imageOfCharacter(const CharacterMatcher & matcher, int i) {
 	QGraphicsScene scene;

@@ -21,6 +21,7 @@ public:
 private slots:
 	void loadImage();
 	void saveImage();
+	void matcherSettings();
 
 private:
 	Ui::MainWindow *ui;
@@ -29,6 +30,8 @@ private:
 
 	void createConnections();
 	void match(QImage);
+	void initSettings(bool force = false);
+	void createMatcher();
 };
 
 #endif // MAINWINDOW_H

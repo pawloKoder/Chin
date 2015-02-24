@@ -17,15 +17,19 @@ SOURCES += src/main.cpp\
     src/mainwindow.cpp \
     src/characterset.cpp \
     src/charactermatcher.cpp \
-    src/imageutils.cpp
+    src/imageutils.cpp \
+    src/matchercreationdialog.cpp
 
 INCLUDEPATH += include
 HEADERS  += include/mainwindow.h \
     include/characterset.h \
     include/charactermatcher.h \
-    include/imageutils.h
+    include/imageutils.h \
+    include/matchercreationdialog.h
 
-FORMS    += ui/mainwindow.ui
+FORMS    += ui/mainwindow.ui \
+    ui/matchercreationdialog.ui
 
 RESOURCES += \
-    qrc/fonts/fonts.qrc
+    qrc/fonts/fonts.qrc \
+    qrc/fonts/latin.qrc
