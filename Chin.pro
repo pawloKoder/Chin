@@ -15,11 +15,15 @@ TEMPLATE = app
 
 SOURCES += src/main.cpp\
     src/mainwindow.cpp \
-    src/characterset.cpp
+    src/characterset.cpp \
+    src/charactermatcher.cpp \
+    src/imageutils.cpp
 
 INCLUDEPATH += include
 HEADERS  += include/mainwindow.h \
-    include/characterset.h
+    include/characterset.h \
+    include/charactermatcher.h \
+    include/imageutils.h
 
 FORMS    += ui/mainwindow.ui
 

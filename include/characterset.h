@@ -14,6 +14,10 @@ public:
 	static CharacterSet chinese();
 	static CharacterSet chineseSmall();
 
+	QString value(int i) const;
+	int count() const;
+	QFont font() const;
+
 private:
 	QFont currentFont;
 	QStringList characters;

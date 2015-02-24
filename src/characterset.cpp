@@ -42,3 +42,20 @@ CharacterSet CharacterSet::chineseSmall()
 	return CharacterSet(font, generateCharactersList(19968, 24869));
 }
 
+
+QString CharacterSet::value(int i) const
+{
+	return characters.value(i);
+}
+
+
+int CharacterSet::count() const
+{
+	return characters.size();
+}
+
+
+QFont CharacterSet::font() const
+{
+	return currentFont;
+}
