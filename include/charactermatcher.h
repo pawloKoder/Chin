@@ -28,6 +28,8 @@ public:
 	 */
 	QGraphicsTextItem * appendCharacter(QGraphicsScene *, int num, QPointF pos = QPointF()) const;
 
+	int bestFit(QImage) const;
+
 private:
 	int xblocks;
 	int yblocks;

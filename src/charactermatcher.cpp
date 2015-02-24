@@ -4,6 +4,7 @@
 #include <QGraphicsScene>
 #include <QImage>
 #include <QPainter>
+#include <qmath.h>
 #include "imageutils.h"
 
 
@@ -71,3 +72,28 @@ void CharacterMatcher::computeBlockValues()
 	for (int i = 0; i < characters.count(); ++i)
 		block_values[i] = computeBlockValuesImpl(images_of_characters[i], xblocks, yblocks);
 }
+
+
+int CharacterMatcher::bestFit(QImage image) const
+{
+	int best_fit = 0;
+	qreal diff = 1000000.0;
+
+	auto part = computeBlockValuesImpl(image, xblocks, yblocks);
+	for (int i = 0; i < block_values.size(); ++i) {
+		qreal current_diff = 0;
+		auto p1 = block_values[i].begin();
+		for (auto p2 = part.begin(); p2 != part.end(); ++p2, ++p1) {
+			current_diff += (*p1 - *p2) * (*p1 - *p2);
+		}
+		current_diff = qSqrt(current_diff);
+
+		if (current_diff < diff) {
+			best_fit = i;
+			diff = current_diff;
+		}
+	}
+
+	return best_fit;
+}
+

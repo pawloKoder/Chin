@@ -6,20 +6,30 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>625</width>
+    <height>444</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralWidget"/>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QGraphicsView" name="view">
+      <property name="dragMode">
+       <enum>QGraphicsView::ScrollHandDrag</enum>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>400</width>
+     <width>625</width>
      <height>20</height>
     </rect>
    </property>
@@ -28,6 +38,8 @@
      <string>File</string>
     </property>
     <addaction name="actionCharacter_set"/>
+    <addaction name="action_Open_Image"/>
+    <addaction name="action_Save_Image"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -55,6 +67,16 @@
   <action name="actionAbout_Qt">
    <property name="text">
     <string>About Qt</string>
+   </property>
+  </action>
+  <action name="action_Open_Image">
+   <property name="text">
+    <string>&amp;Open Image</string>
+   </property>
+  </action>
+  <action name="action_Save_Image">
+   <property name="text">
+    <string>&amp;Save Image</string>
    </property>
   </action>
  </widget>
