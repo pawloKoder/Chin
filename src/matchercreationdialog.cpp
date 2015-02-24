@@ -1,12 +1,33 @@
 #include "include/matchercreationdialog.h"
 #include "ui_matchercreationdialog.h"
 
+#include <QSettings>
+
+
 MatcherCreationDialog::MatcherCreationDialog(QWidget *parent) :
 	QDialog(parent),
 	ui(new Ui::MatcherCreationDialog)
 {
 	ui->setupUi(this);
+	QSettings settings;
+	ui->xblocks->setValue(settings.value("xblocks").toInt());
+	ui->yblocks->setValue(settings.value("yblocks").toInt());
+	ui->window_size->setValue(settings.value("windowSize").toInt());
+
+	switch(settings.value("characterSet").value<CharacterSets>()) {
+	case CharacterSets::CHINESE:
+		ui->set->setCurrentIndex(1);
+		break;
+	case CharacterSets::LATIN:
+		ui->set->setCurrentIndex(2);
+		break;
+	case CharacterSets::CHINESE_REDUCED:
+	default:
+		ui->set->setCurrentIndex(0);
+		break;
+	}
 }
+
 
 MatcherCreationDialog::~MatcherCreationDialog()
 {
