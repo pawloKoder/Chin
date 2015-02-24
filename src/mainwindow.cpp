@@ -3,6 +3,7 @@
 
 #include <QMessageBox>
 #include <QAction>
+#include "characterset.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -11,6 +12,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
 	ui->setupUi(this);
 	createConnections();
+
+	CharacterSet set = CharacterSet::chineseSmall();
 }
 
 

@@ -14,9 +14,14 @@ TEMPLATE = app
 
 
 SOURCES += src/main.cpp\
-        src/mainwindow.cpp
+    src/mainwindow.cpp \
+    src/characterset.cpp
 
 INCLUDEPATH += include
-HEADERS  += include/mainwindow.h
+HEADERS  += include/mainwindow.h \
+    include/characterset.h
 
 FORMS    += ui/mainwindow.ui
+
+RESOURCES += \
+    qrc/fonts/fonts.qrc
